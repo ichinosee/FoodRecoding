@@ -37,24 +37,24 @@ public class CartServlet extends HttpServlet {
 			//showまたはパラメーターな しの場合はトップページを表示
 			if (action == null || action.length() == 0 || action.equals("show")) {
 				gotoPage(request, response, "/cart.jsp");
-				//addはカートに追加処理
+				//addは食べたものリストに追加処理
 			} else if (action.equals("add")) {
 				int code = Integer.parseInt(request.getParameter("food_code"));//注意
 				int quantity = Integer.parseInt(request.getParameter("quantity"));
 				HttpSession session = request.getSession(true);
 				CartBean cart = (CartBean) session.getAttribute("cart");
 				if (cart == null) {
-					//初めてのクライアントの場合はカートを作成する
+					//初めてのユーザーの場合はを作成する
 					cart = new CartBean();
-					session.setAttribute("cart", cart);
+					session.setAttribute("cart", cart)食べたものリスト;
 				}
-				//商品コードの商品を取得する
+				//食品コードの商品を取得する
 				FoodDAO dao = new FoodDAO();
 				FoodBean bean = dao.findByPrimaykey(code);
-				//カートを追加する
+				//食べたものリストを追加する
 				cart.addCart(bean, quantity);
 				gotoPage(request, response, "/cart.jsp");
-				//deleteはカートから削除処理
+				//deleteは食べたものリストから削除処理
 			} else if (action.equals("delete")) {
 				HttpSession session = request.getSession(false);
 				if (session == null) {
