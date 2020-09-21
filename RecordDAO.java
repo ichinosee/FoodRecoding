@@ -29,7 +29,7 @@ public class RecordDAO {
 		ResultSet rs = null;
 
 		try {
-			//顧客情報の取得Serial型の暗黙シーケンスから取得
+			//ユーザー情報の取得Serial型の暗黙シーケンスから取得
 			int customerNumber = 0;
 			String sql = "SELECT nextval('customer_code_seq')";
 			st = con.prepareStatement(sql);
@@ -39,7 +39,7 @@ public class RecordDAO {
 			}
 			rs.close();
 			st.close();
-			//顧客情報の追加SQL文
+			//ユーザー情報の追加SQL文
 			sql = "INSERT INTO customer VALUES(?, ?, ?, ?, ?)";
 			//PreparedStatementオブジェクトの取得
 			st = con.prepareStatement(sql);
@@ -52,7 +52,7 @@ public class RecordDAO {
 			//SQLの実行
 			st.executeUpdate();
 			st.close();
-			//注文番号の取得Serial型の暗黙シーケンスからの取得
+			//記録番号の取得Serial型の暗黙シーケンスからの取得
 			int orderNumber = 0;
 			sql = "SELECT nextval('ordered_code_seq')";
 			st = con.prepareStatement(sql);
@@ -63,7 +63,7 @@ public class RecordDAO {
 			rs.close();
 			st.close();
 
-			//注文情報のOrderedテーブルへの追加
+			//機r九情報のOrderedテーブルへの追加
 			sql = "INSERT INTO ordered VALUES(?, ?, ?, ?)";
 			st = con.prepareStatement(sql);
 			//プレースホルダーの設定
@@ -76,8 +76,8 @@ public class RecordDAO {
 		    st.executeUpdate();
 		    st.close();
 
-		    //注文明細情報のOrderDetailテーブルへの追加
-		    //商品ごとに風数レコード追加
+		    //記録明細情報のOrderDetailテーブルへの追加
+		    //食品ごとに風数レコード追加
 		    sql = "INSERT INTO ordered_detail VALUES(?, ?, ?)";
 		    st = con.prepareStatement(sql);
 		    Map<Integer, FoodBean> items = cart.getItems();
