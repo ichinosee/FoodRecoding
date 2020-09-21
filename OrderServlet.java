@@ -32,7 +32,7 @@ public class OrderServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		//注文処理の業務はすべてセッションとCartが存在することが前提
+		//記録処理の業務はすべてセッションとCartが存在することが前提
 		HttpSession session = request.getSession(false);
 		if (session == null) {//セッションオブジェクトなし
 			request.setAttribute("message", "セッションが切れています。もう一度トップページより操作してください");
@@ -49,7 +49,7 @@ public class OrderServlet extends HttpServlet {
 		try {
 			//パラメーターの解析
 			String action = request.getParameter("action");
-			//input_customerまたはパラメーターなしの場合は顧客情報入力ページを表示
+			//input_customerまたはパラメーターなしの場合はユーザー情報入力ページを表示
 			if (action == null || action.length() == 0 || action.equals("input_customer")) {
 				gotoPage(request, response, "/customerInfo.jsp");
 				//confirmhaは確認処理を行う
@@ -61,21 +61,21 @@ public class OrderServlet extends HttpServlet {
 				bean.setEmail(request.getParameter("email"));
 				session.setAttribute("customer", bean);
 				gotoPage(request, response, "/confirm.jsp");
-				//orderは注文確定
+				//orderは記録確定
 			} else if (action.equals("regist")) {
 				CustomerBean customer = (CustomerBean) session.getAttribute("customer");
 				if (customer == null) {
-					//顧客情報がない
+					//ユーザー情報がない
 					request.setAttribute("message", "正しく操作してください");
 					gotoPage(request, response, "/errInternal.jsp");
 				}
 
 				RecordDAO order = new RecordDAO();
 				int orderNumber = order.saveOrder(customer, cart);
-				//注文はセッション情報をクリアする
+				//記録はセッション情報をクリアする
 				session.removeAttribute("cart");
 				session.removeAttribute("customer");
-				//注文番号をクライアントへ送る
+				//記録番号をクライアントへ送る
 				request.setAttribute("orderNumber", Integer.valueOf(orderNumber));
 				gotoPage(request, response, "/regist.jsp");
 			} else {
