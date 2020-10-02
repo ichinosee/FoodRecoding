@@ -63,7 +63,7 @@ public class RecordDAO {
 			rs.close();
 			st.close();
 
-			//機r九情報のOrderedテーブルへの追加
+			//記録情報のOrderedテーブルへの追加
 			sql = "INSERT INTO ordered VALUES(?, ?, ?, ?)";
 			st = con.prepareStatement(sql);
 			//プレースホルダーの設定
@@ -77,7 +77,7 @@ public class RecordDAO {
 		    st.close();
 
 		    //記録明細情報のOrderDetailテーブルへの追加
-		    //食品ごとに風数レコード追加
+		    //食品ごとに複数レコード追加
 		    sql = "INSERT INTO ordered_detail VALUES(?, ?, ?)";
 		    st = con.prepareStatement(sql);
 		    Map<Integer, FoodBean> items = cart.getItems();
