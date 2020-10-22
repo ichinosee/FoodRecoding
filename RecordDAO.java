@@ -115,8 +115,8 @@ public class RecordDAO {
 			Class.forName("org.postgresql.Driver");
 			//URL、ユーザー名、パスワードの設定
 			String url = "jdbc:postgresql:sample";
-			String user = "student";
-			String pass = "himitu";
+			String user = "hogehoge";
+			String pass = "hogehoge";
 			//データベースの接続
 			con = DriverManager.getConnection(url, user, pass);
 		} catch (Exception e) {
